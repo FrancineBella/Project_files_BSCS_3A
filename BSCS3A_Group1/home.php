@@ -1,9 +1,11 @@
 <?php
 session_start();
 if (isset($_SESSION['login_details'])) {
-  $isBranchHead = $_SESSION['login_details']['isBranchHead'];
-  if ($isBranchHead == 0) {
+  $app_role = $_SESSION['login_details']['app_role'];
+  if ($app_role == 2) {
     header('Location: bundle1.php');
+  } else if ($app_role == 3) {
+    header('Location: webpage3.php');
   }
 } else {
   echo "<script type='text/javascript'> 
@@ -41,14 +43,14 @@ require_once "config.php";
   }
 
   .btn-square-md {
-    width: 300px !important;
+    width: 220px !important;
     max-width: 100% !important;
     max-height: 100% !important;
-    height: 300px !important;
+    height: 220px !important;
     color: black;
     text-align: center;
     padding: 0px;
-    font-size: 50px;
+    font-size: 2.5em;
     font-weight: bold;
     background-color: cyan;
     border-radius: 12px;
@@ -115,13 +117,31 @@ require_once "config.php";
 
 
   <h1 class=" text-5xl font-extrabold">WELCOME TO ALLSHIRT COMMERCIAL OUTLET!</h1>
-  <a href="bundle1.php" class="place-items-center">
-    <button type="button" class="btn btn-primary btn-square-md ">
-      <i class="fa fa-shopping-bag" aria-hidden="true"></i>
-      <br />
-      Bundle<br />Item
-    </button>
-  </a>
+  <?php
+  if ($app_role == 1) {
+  ?>
+    <a href="bundle1.php" class="place-items-center">
+      <button type="button" class="btn btn-primary btn-square-md ">
+        <i class="fa fa-shopping-bag" aria-hidden="true"></i>
+        <br />
+        Bundle<br />Item
+      </button>
+    </a>
+    <a href="webpage3.php" class="place-items-center">
+      <button type="button" class="btn btn-primary btn-square-md">
+        <i class="fa fa-calculator" aria-hidden="true"></i>
+        <br />
+        POS
+      </button>
+    </a>
+    <a href="sales_report.php" class="place-items-center">
+      <button type="button" class="btn btn-primary btn-square-md">
+        <i class="fa fa-line-chart" aria-hidden="true"></i>
+        <br />
+        Sales <br> Report
+      </button>
+    </a>
+  <?php } ?>
   <a href="webpage2_new.php" class="place-items-center">
     <button type="button" class="btn btn-primary btn-square-md">
       <i class="fa fa-credit-card" aria-hidden="true"></i>
@@ -136,20 +156,24 @@ require_once "config.php";
       Employee List
     </button>
   </a>
-  <a href="webpage3.php" class="place-items-center">
-    <button type="button" class="btn btn-primary btn-square-md">
-      <i class="fa fa-calculator" aria-hidden="true"></i>
-      <br />
-      POS
-    </button>
-  </a>
-  <a href="sales_report.php" class="place-items-center">
-    <button type="button" class="btn btn-primary btn-square-md">
-      <i class="fa fa-line-chart" aria-hidden="true"></i>
-      <br />
-      Sales <br> Report
-    </button>
-  </a>
+  <?php
+  if ($app_role == 1) {
+  ?>
+    <a href="products.php" class="place-items-center">
+      <button type="button" class="btn btn-primary btn-square-md">
+        <i class="fa fa-shopping-bag" aria-hidden="true"></i>
+        <br />
+        Items list
+      </button>
+    </a>
+    <a href="users.php" class="place-items-center">
+      <button type="button" class="btn btn-primary btn-square-md">
+        <i class="fa fa-user" aria-hidden="true"></i>
+        <br />
+        User List
+      </button>
+    </a>
+  <?php } ?>
 </body>
 
 </html>

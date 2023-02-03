@@ -94,7 +94,6 @@ const savePayroll = function () {
 
     $.post('api/update_payroll.php', { params, pay_date, emp_id }, function (res) {
         let resp = JSON.parse(res);
-        console.log(resp);
         if (resp.result) {
             if (resp.affected_rows > 0) {
                 alert("Payroll successfully saved!");
@@ -123,6 +122,15 @@ $(function () {
                 $('input#dept').val(data.dept)
                 $('input#designation').val(data.desg)
                 $('img#emp-img-viewer').prop('src', data.emp_img)
+            } else {
+                $('input#emp_name').val('');
+                $('input#c_status').val('');
+                $('input#tax_status').val('');
+                $('input#emp_status').val('');
+                $('input#dept').val('');
+                $('input#designation').val('');
+                $('img#emp-img-viewer').prop('src', 'img/default-img.png')
+
             }
 
             $('input#pay_date').trigger('change');
@@ -178,7 +186,7 @@ $(function () {
             }
 
             calcGI();
-            calcNI();
+            // calcNI();
         })
     });
 

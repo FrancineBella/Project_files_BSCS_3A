@@ -1,7 +1,13 @@
 <?php
 session_start();
 if (isset($_SESSION['login_details'])) {
-  $isBranchHead = $_SESSION['login_details']['isBranchHead'];
+  $app_role = $_SESSION['login_details']['app_role'];
+  if ($app_role == 3 || $app_role == 4) {
+    echo "<script type='text/javascript'>
+        alert('You are not supposed to be here. Redirecting..')
+        window.location = 'home.php';
+    </script>";
+  }
 } else {
   echo "<script type='text/javascript'> 
   localStorage.removeItem('adetech_user');
@@ -18,7 +24,7 @@ require_once "config.php";
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>POS | AllShirt Commercial Outlet</title>
+  <title>Bundle POS | AllShirt Commercial Outlet</title>
   <!-- <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet"> -->
   <link href="css/tailwind.min.css" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
@@ -49,33 +55,41 @@ require_once "config.php";
         </a>
         <ul class="flex flex-col py-4 space-y-2 mt-12">
           <!--webpage 1-->
-          <li>
-            <a href="bundle1.php" class="flex items-center">
-              <span class="flex items-center justify-center h-12 w-12 rounded-2xl" x-bind:class="{
+          <?php
+          if ($app_role == 1 || $app_role == 2) {
+          ?>
+            <li>
+              <a href="bundle1.php" class="flex items-center">
+                <span class="flex items-center justify-center h-12 w-12 rounded-2xl" x-bind:class="{
                   'hover:bg-cyan-400 text-cyan-100': activeMenu !== 'pos',
                   'bg-cyan-300 shadow-lg text-white': activeMenu === 'pos',
                 }">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="h-6 w-6" viewBox="0 0 16 16">
-                  <path fill-rule="evenodd" d="M8 7.5a.5.5 0 0 1 .5.5v1.5H10a.5.5 0 0 1 0 1H8.5V12a.5.5 0 0 1-1 0v-1.5H6a.5.5 0 0 1 0-1h1.5V8a.5.5 0 0 1 .5-.5z" />
-                  <path d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1zm3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4h-3.5zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V5z" />
-                </svg>
-              </span>
-            </a>
-          </li>
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="h-6 w-6" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M8 7.5a.5.5 0 0 1 .5.5v1.5H10a.5.5 0 0 1 0 1H8.5V12a.5.5 0 0 1-1 0v-1.5H6a.5.5 0 0 1 0-1h1.5V8a.5.5 0 0 1 .5-.5z" />
+                    <path d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1zm3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4h-3.5zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V5z" />
+                  </svg>
+                </span>
+              </a>
+            </li>
+          <?php } ?>
           <!--webpage 3-->
-          <li>
-            <a href="webpage3.php" class="flex items-center">
-              <span class="flex items-center justify-center text-cyan-100 hover:bg-cyan-400 h-12 w-12 rounded-2xl">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
-                </svg>
-              </span>
-            </a>
-          </li>
           <?php
-          if ($isBranchHead == 1) {
+          if ($app_role == 1 || $app_role == 3) {
           ?>
-            <!--webpage 2-->
+            <li>
+              <a href="webpage3.php" class="flex items-center">
+                <span class="flex items-center justify-center text-cyan-100 hover:bg-cyan-400 h-12 w-12 rounded-2xl">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                  </svg>
+                </span>
+              </a>
+            </li>
+          <?php } ?>
+          <!--webpage 2-->
+          <?php
+          if ($app_role == 1 || $app_role == 4) {
+          ?>
             <li>
               <a href="webpage2_new.php" class="flex items-center">
                 <span class="flex items-center justify-center text-cyan-100 hover:bg-cyan-400 h-12 w-12 rounded-2xl">
@@ -97,6 +111,10 @@ require_once "config.php";
                 </span>
               </a>
             </li>
+          <?php } ?>
+          <?php
+          if ($app_role == 1 || $app_role == 2 || $app_role == 3) {
+          ?>
             <!-- sales report -->
             <li>
               <a href="sales_report.php" class="flex items-center">
@@ -107,12 +125,26 @@ require_once "config.php";
                 </span>
               </a>
             </li>
+          <?php } ?>
+          <?php
+          if ($app_role == 1) {
+          ?>
             <!-- products -->
             <li>
               <a href="products.php" class="flex items-center">
                 <span class="flex items-center justify-center text-cyan-100 hover:bg-cyan-400 h-12 w-12 rounded-2xl">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="h-6 w-6 bi bi-pencil-square" viewBox="0 0 16 16">
                     <path d="M5.757 1.071a.5.5 0 0 1 .172.686L3.383 6h9.234L10.07 1.757a.5.5 0 1 1 .858-.514L13.783 6H15.5a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H.5a.5.5 0 0 1-.5-.5v-1A.5.5 0 0 1 .5 6h1.717L5.07 1.243a.5.5 0 0 1 .686-.172zM3.394 15l-1.48-6h-.97l1.525 6.426a.75.75 0 0 0 .729.574h9.606a.75.75 0 0 0 .73-.574L15.056 9h-.972l-1.479 6h-9.21z" />
+                  </svg>
+                </span>
+              </a>
+            </li>
+            <!-- users -->
+            <li>
+              <a href="users.php" class="flex items-center">
+                <span class="flex items-center justify-center text-cyan-100 hover:bg-cyan-400 h-12 w-12 rounded-2xl">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="h-6 w-6 bi bi-pencil-square" viewBox="0 0 16 16">
+                    <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3Zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" />
                   </svg>
                 </span>
               </a>
@@ -214,11 +246,32 @@ require_once "config.php";
             </div>
             <div x-show="filteredProducts().length" class="grid grid-cols-4 gap-4 pb-3">
               <template x-for="product in filteredProducts()" :key="product.id">
-                <div role="button" class="select-none cursor-pointer transition-shadow overflow-hidden rounded-2xl bg-white shadow hover:shadow-lg" :title="product.name" x-on:click="addToCart(product)">
+                <div role="button" class="select-none cursor-pointer transition-shadow overflow-hidden rounded-2xl bg-white shadow hover:shadow-lg" :title="product.name" x-on:click="product.qty > 0 && addToCart(product)" style="position: relative;">
+                  <div x-show=" product.qty==0" style="width: 100%;
+                    height: 100%;
+                    position: absolute;
+                    background-color: silver;
+                    color: red;
+                    opacity: 0.8;
+                    padding: 50% 0;
+                    text-align: center;
+                    font-size: 25px;
+                    top: 0;
+                    left: 0;"><b>OUT OF STOCK</b></div>
                   <img :src="product.image" :alt="product.name">
                   <div class="flex pb-3 px-3 text-sm -mt-3" style="margin-top:5px;">
                     <p class="flex-grow truncate mr-1" x-text="product.name"></p>
-                    <p class="nowrap font-semibold" x-text="priceFormat(product.price)"></p>
+
+                    <p class="nowrap font-semibold" x-bind:class="{
+                      'line-through text-gray-300 ': (product.discount > 0)
+                    }" x-text="priceFormat(product.price)"></p>
+
+                    <p x-show=" product.discount > 0" class="nowrap font-semibold" x-text="priceFormat(product.discounted_price)"></p>
+                  </div>
+                  <div class="flex pb-3 px-3 text-sm -mt-3">
+                    <p class="flex-grow truncate mr-1" x-bind:class="{
+                      'text-red-500': (product.qty == 0)
+                    }" x-text="(product.qty > 0) ? product.qty + ' in stock' : ''"></p>
                   </div>
                 </div>
               </template>
@@ -267,7 +320,10 @@ require_once "config.php";
                   <img :src="item.image" alt="" class="rounded-lg h-10 w-10 bg-white shadow mr-2">
                   <div class="flex-grow">
                     <h5 class="text-sm" x-text="item.name"></h5>
-                    <p class="text-xs block" x-text="priceFormat(item.price)"></p>
+                    <p class="text-xs block" x-bind:class="{
+                      'line-through text-gray-300 ': (item.discount > 0)
+                    }" x-text="priceFormat(item.price)"></p>
+                    <p x-show=" item.discount > 0" class="text-xs block" x-text="priceFormat(item.discounted_price)"></p>
                   </div>
                   <div class="py-1">
                     <div class="w-28 grid grid-cols-3 gap-2 ml-2">
@@ -301,7 +357,7 @@ require_once "config.php";
                 <div class="flex-grow text-left">CASH</div>
                 <div class="flex text-right">
                   <div class="mr-2">Php</div>
-                  <input x-bind:value="numberFormat(cash)" x-on:change="updateCash($event.target.value)" type="text" class="w-28 text-right bg-white shadow rounded-lg focus:bg-white focus:shadow-lg px-2 focus:outline-none">
+                  <input x-bind:value="numberFormat(cash)" x-on:blur="updateCash($event.target.value)" type="text" class="w-28 text-right bg-white shadow rounded-lg focus:bg-white focus:shadow-lg px-2 focus:outline-none">
                 </div>
               </div>
               <hr class="my-2">
